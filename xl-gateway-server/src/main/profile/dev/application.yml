@@ -1,0 +1,32 @@
+server.port: 8000
+
+spring:
+  application:
+    name: xl-gateway-server
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+
+apollo:
+  bootstrap:
+    enabled: true
+    namespaces: application
+  meta: http://localhost:8080
+
+app:
+  id: xl-platform
+
+#开启https配置
+#server:
+#  ssl:
+#    key-alias: spring
+#    enabled: true
+#    key-password: spring
+#    key-store: classpath:selfsigned.jks
+#    key-store-type: JKS
+#    key-store-provider: SUN
+#    key-store-password: spring
+

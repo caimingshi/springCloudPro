@@ -1,0 +1,136 @@
+apollo:
+    bootstrap:
+        enabled: true
+        namespaces: application
+    meta: http://localhost:8080
+app:
+    id: xl-platform
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8761/eureka/
+hystrix:
+    command:
+        fallbackcmd:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 5000
+logging:
+    level:
+        reactor:
+            ipc:
+                netty:
+                    channel:
+                        CloseableContextHandler: 'off'
+management:
+    endpoints:
+        web:
+            exposure:
+                include: '*'
+    security:
+        enabled: false
+mybatis-plus:
+    configuration:
+        aggressive-lazy-loading: false
+        cache-enabled: false
+        lazy-load-trigger-methods: ''
+        lazy-loading-enabled: true
+        map-underscore-to-camel-case: false
+    global-config:
+        db-column-underline: false
+        field-strategy: 2
+        id-type: 0
+        logic-delete-value: 1
+        logic-not-delete-value: 0
+        meta-object-handler: com.xl.platform.core.config.mybatisplus.CommonFieldMetaObjectHandler
+        refresh-mapper: true
+        sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    mapper-locations: classpath*:/mapper/*Mapper.xml
+    typeAliasesPackage: com.bix.bixApi.entity
+server:
+    port: 8000
+spring:
+    application:
+        name: xl-gateway-server
+    autoconfigure:
+        exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+    cache:
+        cache-names: redisCache
+        redis:
+            time-to-live: 600000
+        type: redis
+    cloud:
+        gateway:
+            globalcors:
+                cors-configurations:
+                    '[/**]':
+                        allowedMethods:
+                        - GET
+                        - POST
+                        allowedOrigins: '*'
+            locator:
+                enabled: true
+                lowerCaseServiceId: true
+            routes:
+            -   filters:
+                -   args:
+                        fallbackUri: forward:/fallback
+                        name: fallbackcmd
+                    name: Hystrix
+                -   args:
+                        key-resolver: '#{@ipKeyResolver}'
+                        redis-rate-limiter:
+                            burstCapacity: 5
+                            replenishRate: 1
+                    name: RequestRateLimiter
+                id: xl-a-server
+                predicates:
+                - Path=/a/**
+                uri: lb://xl-a-server
+            -   id: xl-b-server
+                predicates:
+                - Path=/b/**
+                uri: lb://xl-b-server
+    datasource:
+        druid:
+            test-on-borrow: true
+            test-while-idle: true
+        dynamic:
+            datasource:
+                basic:
+                    driver-class-name: com.mysql.jdbc.Driver
+                    password: root
+                    type: com.alibaba.druid.pool.DruidDataSource
+                    url: jdbc:mysql://localhost:3306/shua?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+                    username: root
+                master:
+                    driver-class-name: com.mysql.jdbc.Driver
+                    password: root
+                    type: com.alibaba.druid.pool.DruidDataSource
+                    url: jdbc:mysql://localhost:3306/shua?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+                    username: root
+            primary: master
+    redis:
+        host: 47.52.56.145
+        jedis:
+            pool:
+                max-active: 1000
+                max-idle: 500
+                max-wait: 5000
+                min-idle: 100
+                test-on-borrow: true
+                test-while-idle: true
+        password: bix#123456
+        port: 6379
+xl:
+    platform:
+        jwt:
+            effective-time: 2,592,000
+            skip-auth-urls:
+            - /a/testA/login
+            - /a/v2/api-docs
+            - /b/v2/api-docs
+            sso: true
+    redis:
+        prefix: xl

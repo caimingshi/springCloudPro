@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="xl-core" />
+        <module name="xl-a-server" />
+        <module name="xl-eureka-server" />
+        <module name="xl-a-api" />
+        <module name="xl-gateway-server" />
+        <module name="xl-b-server" />
+        <module name="xl-b-api" />
+        <module name="xl-common" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="xl-a-api" options="-parameters -nowarn" />
+      <module name="xl-a-server" options="-parameters -nowarn" />
+      <module name="xl-b-api" options="-parameters -nowarn" />
+      <module name="xl-b-server" options="-parameters -nowarn" />
+      <module name="xl-common" options="-parameters -nowarn" />
+      <module name="xl-core" options="-parameters -nowarn" />
+      <module name="xl-eureka-server" options="-parameters -nowarn" />
+      <module name="xl-gateway-server" options="-parameters -nowarn" />
+    </option>
+  </component>
+</project>

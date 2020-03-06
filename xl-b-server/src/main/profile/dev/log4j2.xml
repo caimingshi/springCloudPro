@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="300">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout>
+                <pattern>%-5p|%d{yyyy-MM-dd HH:mm:ss,SSS}|%X{TRACE_ID}|%t|%C{1}:%L|%m%n</pattern>
+            </PatternLayout>
+        </Console>
+        <RollingFile name="RollingFile"
+                     fileName="${sys:user.home}/logs/bx-user-microservice/bx-user-microservice.log"
+                     filePattern="${sys:user.home}/logs/bx-user-microservice/bx-user-microservice.%d{yyyyMMdd}.log.gz"
+                     append="true">
+            <PatternLayout>
+                <pattern>%-5p|%d{yyyy-MM-dd HH:mm:ss,SSS}|%X{TRACE_ID}|%t|%C{1}:%L|%m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="ErrorRollingFile"
+                     fileName="${sys:user.home}/logs/bx-user-microservice/bx-user-microservice-error.log"
+                     filePattern="${sys:user.home}/logs/bx-user-microservice/bx-user-microservice-error.%d{yyyyMMdd}.log.gz"
+                     append="true">
+            <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            <PatternLayout>
+                <pattern>%-5p|%d{yyyy-MM-dd HH:mm:ss,SSS}|%X{TRACE_ID}|%t|%C{1}:%L|%m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <AsyncRoot level="INFO" includeLocation="true" additivity="false">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="ErrorRollingFile"/>
+        </AsyncRoot>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,106 @@
+server.port: 8081
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: xl-a-server
+
+  autoconfigure:
+    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure,org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+  datasource:
+    druid:
+      test-on-borrow: true
+      test-while-idle: true
+    dynamic:
+      primary: master #设置默认的数据源或者数据源组,默认值即为master,如果你主从默认下主库的名称就是master可不定义此项。
+      datasource:
+        master:
+          url: jdbc:mysql://localhost:3306/shua?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+          # 数据库连接用户名称
+          username: root
+          # 数据库连接用户密码
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          type: com.alibaba.druid.pool.DruidDataSource
+        #basic库配置
+        basic:
+          url: jdbc:mysql://localhost:3306/shua?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false
+          # 数据库连接用户名称
+          username: root
+          # 数据库连接用户密码
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          type: com.alibaba.druid.pool.DruidDataSource
+
+
+  cache:
+    type: redis
+    cache-names: redisCache
+    # 设置10分钟超时
+    redis:
+      time-to-live: 600000
+
+    # redis配置
+  redis:
+    port: 6379
+    host: 47.52.56.145
+    password: bix#123456
+
+    jedis:
+      pool:
+        min-idle: 100
+        max-active: 1000
+        max-idle: 500
+        max-wait: 5000
+        #在空闲时检查有效性
+        test-while-idle: true
+        #在获取连接的时候检查有效性
+        test-on-borrow: true
+
+
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/*Mapper.xml
+  typeAliasesPackage: com.xl.platform.a.entity
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    db-column-underline: false
+    # 刷新mapper 调试神器
+    refresh-mapper: true
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+    sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+    meta-object-handler: com.xl.platform.core.config.mybatisplus.CommonFieldMetaObjectHandler
+  configuration:
+    map-underscore-to-camel-case: false
+    cache-enabled: false
+    lazy-loading-enabled: true
+    aggressive-lazy-loading: false
+    lazy-load-trigger-methods: ""
+
+xl:
+  # redis前綴
+  redis:
+    prefix: xl
+
+server:
+  servlet:
+    context-path: /a
+
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+  hystrix:
+    enabled: true
+
+canal:
+  config:
+    open: true
+    host: 127.0.0.1
+    port: 8888
