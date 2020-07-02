@@ -22,7 +22,7 @@
         <hutool.version>2.16.2</hutool.version>
         <commons-jexl.version>2.1.1</commons-jexl.version>
         <hutool-all.version>4.0.12</hutool-all.version>
-        <mysql-connector.version>5.1.46</mysql-connector.version>
+        <mysql-connector.version>8.0.16</mysql-connector.version>
         <commons-codec.version>1.11</commons-codec.version>
         <commons-collections.version>3.2.2</commons-collections.version>
         <springfox-swagger2.version>2.9.2</springfox-swagger2.version>
