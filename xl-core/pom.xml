@@ -18,7 +18,7 @@
         <dynamic-datasource.version>2.5.1</dynamic-datasource.version>
         <druid-spring.version>1.1.14</druid-spring.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <hutool.version>2.16.2</hutool.version>
         <commons-jexl.version>2.1.1</commons-jexl.version>
         <hutool-all.version>4.0.12</hutool-all.version>
